@@ -1,0 +1,27 @@
+# Python virtual environment
+venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Django local database and uploaded files
+db.sqlite3
+default_*.sqlite3
+media/
+
+# Environment and editor settings
+.env
+.vscode/
+.idea/
+
+# Local Hugging Face / model cache
+.cache/
+hf_cache/
+
+# Local diagnostics and test output
+*.log
+*.err.log
+*.out.log
+*_temp.py
+gemini_probe.py

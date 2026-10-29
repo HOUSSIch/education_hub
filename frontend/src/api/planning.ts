@@ -1,0 +1,16 @@
+import api from './client';
+import type { PlanningComplaint, TimetableSlot, TimetableSlotPayload, TimetablePreviewPayload, WeeklyTimetable, WeeklyTimetablePayload } from '../types/planning';
+export const getTimetables=async()=> (await api.get<WeeklyTimetable[]>('/api/emplois-du-temps/')).data;
+export const getTimetable=async(id:number)=> (await api.get<WeeklyTimetable>(`/api/emplois-du-temps/${id}/`)).data;
+export const createTimetable=async(d:WeeklyTimetablePayload)=> (await api.post<WeeklyTimetable>('/api/emplois-du-temps/',d)).data;
+export const updateTimetable=async(id:number,d:Partial<WeeklyTimetablePayload>)=> (await api.patch<WeeklyTimetable>(`/api/emplois-du-temps/${id}/`,d)).data;
+export const deleteTimetable=async(id:number)=>{await api.delete(`/api/emplois-du-temps/${id}/`)};
+export const publishTimetable=async(id:number)=> (await api.post<WeeklyTimetable>(`/api/emplois-du-temps/${id}/publier/`)).data;
+export const generateTimetablePreview=async(d:TimetablePreviewPayload)=> (await api.post<{creneaux:unknown[];ignored_proposals_count?:number}>('/api/emplois-du-temps/generer-preview/',d)).data;
+export const getTimetableSlots=async()=> (await api.get<TimetableSlot[]>('/api/creneaux-planning/')).data;
+export const createTimetableSlot=async(d:TimetableSlotPayload)=> (await api.post<TimetableSlot>('/api/creneaux-planning/',d)).data;
+export const updateTimetableSlot=async(id:number,d:Partial<TimetableSlotPayload>)=> (await api.patch<TimetableSlot>(`/api/creneaux-planning/${id}/`,d)).data;
+export const deleteTimetableSlot=async(id:number)=>{await api.delete(`/api/creneaux-planning/${id}/`)};
+export const getPlanningComplaints=async()=> (await api.get<PlanningComplaint[]>('/api/reclamations-planning/')).data;
+export const createPlanningComplaint=async(d:{emploi_du_temps:number;creneau?:number|null;motif:string;message:string})=>(await api.post<PlanningComplaint>('/api/reclamations-planning/',d)).data;
+export const updatePlanningComplaint=async(id:number,d:{statut:'ACCEPTEE'|'REFUSEE';reponse_admin:string})=>(await api.patch<PlanningComplaint>(`/api/reclamations-planning/${id}/`,d)).data;

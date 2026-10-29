@@ -1,0 +1,18 @@
+import api from './client';
+import type { Answer, AnswerPayload, Question, QuestionPayload, Quiz, QuizPayload, QuizResult, QuizSubmission } from '../types/quiz';
+export const getQuizzes=async()=> (await api.get<Quiz[]>('/api/quizzes/')).data;
+export const getQuiz=async(id:number)=> (await api.get<Quiz>(`/api/quizzes/${id}/`)).data;
+export const createQuiz=async(data:QuizPayload)=> (await api.post<Quiz>('/api/quizzes/',data)).data;
+export const updateQuiz=async(id:number,data:Partial<QuizPayload>)=> (await api.patch<Quiz>(`/api/quizzes/${id}/`,data)).data;
+export const deleteQuiz=async(id:number)=>{await api.delete(`/api/quizzes/${id}/`);};
+export const getQuestions=async()=> (await api.get<Question[]>('/api/questions/')).data;
+export const createQuestion=async(data:QuestionPayload)=> (await api.post<Question>('/api/questions/',data)).data;
+export const updateQuestion=async(id:number,data:Partial<QuestionPayload>)=> (await api.patch<Question>(`/api/questions/${id}/`,data)).data;
+export const deleteQuestion=async(id:number)=>{await api.delete(`/api/questions/${id}/`);};
+export const getAnswers=async()=> (await api.get<Answer[]>('/api/reponses/')).data;
+export const createAnswer=async(data:AnswerPayload)=> (await api.post<Answer>('/api/reponses/',data)).data;
+export const updateAnswer=async(id:number,data:Partial<AnswerPayload>)=> (await api.patch<Answer>(`/api/reponses/${id}/`,data)).data;
+export const deleteAnswer=async(id:number)=>{await api.delete(`/api/reponses/${id}/`);};
+export const submitQuiz=async(quizId:number,data:QuizSubmission)=> (await api.post<QuizResult>(`/api/quizzes/${quizId}/soumettre/`,data)).data;
+export const getResults=async()=> (await api.get<QuizResult[]>('/api/resultats/')).data;
+export const generateQuizFromCourse=async(courseId:number,questionCount:number)=> (await api.post<Quiz>(`/api/cours/${courseId}/generer-quiz/`,{question_count:questionCount})).data;
